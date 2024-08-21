@@ -13,7 +13,13 @@ const auth = (req, res, next) => {
             // verify token
             try {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                req.user = {
+                    email: decoded.email,
+                    name: decoded.name,
+                    createdBy: "yshima"
+                }
                 console.log('>> check decoded token:', decoded)
+                console.log('>> check req user:', req.user)
                 next();
             } catch (error) {
                 return res.status(401).json({
